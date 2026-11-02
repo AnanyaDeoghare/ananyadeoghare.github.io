@@ -1108,3 +1108,13 @@ ul#slide-out li.logo {
 body.menu-open .menu-toggle {
   left: 208px;
 }
+
+/* Phone menu photo in normal flow, Nov 2026 */
+ul#slide-out li.logo img {
+  display: block;
+  max-width: 120px;
+  height: auto;
+  margin: 0 auto;
+  border: 6px solid rgba(0, 77, 64, 0.4);
+  border-radius: 50%;
+}
