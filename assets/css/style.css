@@ -882,3 +882,117 @@ ul.side-nav.fixed li.active a {
 ul.side-nav.fixed li a i {
   color: #93c5fd !important;
 }
+
+/* Animated network intro, Nov 2026 */
+#intro.section {
+  background: #000000 !important;
+}
+#intro-network {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+#intro.section .overlay {
+  background-color: transparent !important;
+}
+#intro.section .container {
+  color: #ffffff !important;
+}
+#intro.section .container *:not(span) {
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5) !important;
+}
+#intro.section .container h2 {
+  color: #ffffff !important;
+}
+#intro.section .container h5 {
+  color: #ffffff !important;
+}
+#intro.section .container h5 span.typing {
+  color: #ffffff !important;
+}
+#intro.section .caption h2 span.teal {
+  background-color: transparent !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+}
+#intro .icon-btn.github,
+#intro .icon-btn.linkedin {
+  color: #ffffff !important;
+}
+#intro .icon-btn.github:hover {
+  background-color: #333333 !important;
+}
+/* Menu drawer, Nov 2026: sidebar hidden until the menu button is clicked */
+main {
+  padding-left: 0 !important;
+}
+.menu-toggle {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e3a8a;
+  border: 0;
+  border-radius: 24px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.30);
+}
+.menu-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.menu-lines span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #ffffff;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.menu-label {
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+body.menu-open .menu-lines span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+body.menu-open .menu-lines span:nth-child(2) {
+  opacity: 0;
+}
+body.menu-open .menu-lines span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+.menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 999;
+}
+body.menu-open .menu-backdrop {
+  opacity: 1;
+  visibility: visible;
+}
+ul.side-nav.fixed {
+  transform: translateX(-105%);
+  transition: transform 0.35s ease;
+  z-index: 1000;
+}
+body.menu-open ul.side-nav.fixed {
+  transform: translateX(0);
+}

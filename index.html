@@ -49,6 +49,11 @@
 </head>
 
 <body>
+  <button id="menu-toggle" class="menu-toggle hide-on-med-and-down" aria-label="Open menu" aria-expanded="false">
+    <span class="menu-lines"><span></span><span></span><span></span></span>
+    <span class="menu-label">Menu</span>
+  </button>
+  <div id="menu-backdrop" class="menu-backdrop"></div>
   
   <!-- Navigation Menu-->
   <!-- Nav class 1 -->
@@ -152,6 +157,7 @@
   <main>
     <!-- First Section: Heading lines and image -->
     <section id="intro" class="section scrollspy full-height">
+      <canvas id="intro-network"></canvas>
       <div class="overlay"></div>
       <div class="container">
         <div class="col-md-9">
@@ -864,6 +870,120 @@ Eye Tracking
       })
     })
   </script>
+<script>
+(function () {
+  var section = document.getElementById('intro');
+  var canvas = document.getElementById('intro-network');
+  if (section && canvas) {
+    var ctx = canvas.getContext('2d');
+    var dots = [];
+    var mouse = { x: -10000, y: -10000 };
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function build() {
+      var w = section.clientWidth;
+      var h = section.clientHeight;
+      canvas.width = w;
+      canvas.height = h;
+      var count = Math.max(30, Math.min(90, Math.floor((w * h) / 16000)));
+      dots = [];
+      for (var i = 0; i < count; i++) {
+        dots.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          r: 1.2 + Math.random() * 1.1
+        });
+      }
+    }
+    function draw() {
+      var w = canvas.width;
+      var h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      var link = 130;
+      for (var i = 0; i < dots.length; i++) {
+        for (var j = i + 1; j < dots.length; j++) {
+          var dx = dots[i].x - dots[j].x;
+          var dy = dots[i].y - dots[j].y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d < link) {
+            ctx.strokeStyle = 'rgba(255, 255, 255, ' + (0.35 * (1 - d / link)).toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(dots[i].x, dots[i].y);
+            ctx.lineTo(dots[j].x, dots[j].y);
+            ctx.stroke();
+          }
+        }
+        var mx = dots[i].x - mouse.x;
+        var my = dots[i].y - mouse.y;
+        var md = Math.sqrt(mx * mx + my * my);
+        if (md < 160) {
+          ctx.strokeStyle = 'rgba(255, 255, 255, ' + (0.5 * (1 - md / 160)).toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(dots[i].x, dots[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.stroke();
+        }
+      }
+      for (var k = 0; k < dots.length; k++) {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.beginPath();
+        ctx.arc(dots[k].x, dots[k].y, dots[k].r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    function step() {
+      var w = canvas.width;
+      var h = canvas.height;
+      for (var i = 0; i < dots.length; i++) {
+        dots[i].x += dots[i].vx;
+        dots[i].y += dots[i].vy;
+        if (dots[i].x < 0 || dots[i].x > w) { dots[i].vx = -dots[i].vx; }
+        if (dots[i].y < 0 || dots[i].y > h) { dots[i].vy = -dots[i].vy; }
+      }
+      draw();
+      requestAnimationFrame(step);
+    }
+    section.addEventListener('mousemove', function (e) {
+      var rect = section.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    section.addEventListener('mouseleave', function () {
+      mouse.x = -10000;
+      mouse.y = -10000;
+    });
+    window.addEventListener('resize', build);
+    build();
+    if (reduced) { draw(); } else { requestAnimationFrame(step); }
+  }
+  var toggle = document.getElementById('menu-toggle');
+  var backdrop = document.getElementById('menu-backdrop');
+  if (toggle) {
+    function closeMenu() {
+      document.body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    toggle.addEventListener('click', function () {
+      if (document.body.classList.contains('menu-open')) { closeMenu(); }
+      else {
+        document.body.classList.add('menu-open');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+    if (backdrop) { backdrop.addEventListener('click', closeMenu); }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeMenu(); }
+    });
+    var links = document.querySelectorAll('ul.side-nav.fixed a');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', closeMenu);
+    }
+  }
+})();
+</script>
 </body>
 
 </html>
