@@ -803,3 +803,62 @@ font-size: 0.9rem;
 font-weight: 500;
 color: #64748b;
 }
+
+/* Light blue theme, Nov 2026: intro light blue, sidebar lighter blue, other pages palest blue, name highlight block removed */
+#intro.section {
+  background: #dbeafe !important;
+}
+#intro.section .overlay {
+  background-color: transparent !important;
+}
+#intro.section .container {
+  color: #0f172a !important;
+}
+#intro.section .container *:not(span) {
+  color: #0f172a !important;
+  text-shadow: none !important;
+}
+#intro.section .container h2 {
+  color: #0f172a !important;
+}
+#intro.section .container h5 {
+  color: #0f172a !important;
+}
+#intro.section .container h5 span.typing {
+  color: #0f172a !important;
+}
+#intro.section .caption h2 span.teal {
+  background-color: transparent !important;
+  padding: 0 !important;
+  color: #0f172a !important;
+}
+#intro .contactme {
+  color: #0f172a !important;
+  border-color: #0f172a !important;
+}
+#intro .contactme:hover {
+  color: #ffffff !important;
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+ul.side-nav.fixed {
+  background-color: #bfdbfe !important;
+}
+ul.side-nav.fixed li.logo {
+  background-color: #bfdbfe !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.12) !important;
+}
+ul.side-nav.fixed li a {
+  color: #0f172a !important;
+}
+ul.side-nav.fixed li a:hover,
+ul.side-nav.fixed li.active a {
+  background-color: rgba(15, 23, 42, 0.10) !important;
+  color: #0f172a !important;
+}
+ul.side-nav.fixed li a i {
+  color: #1d4ed8 !important;
+}
+body {
+  background-color: #eff6ff !important;
+}
