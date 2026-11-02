@@ -1018,3 +1018,25 @@ ul#slide-out {
   background: #dbeafe !important;
   border-color: #dbeafe !important;
 }
+
+/* Phone menu navy like desktop sidebar, Nov 2026 */
+ul#slide-out {
+  background-color: #1e3a8a !important;
+}
+ul#slide-out li.logo {
+  background-color: #1e3a8a !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+ul#slide-out li a {
+  color: #dbeafe !important;
+}
+ul#slide-out li a:hover, ul#slide-out li.active a {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+ul#slide-out li a i {
+  color: #93c5fd !important;
+}
+ul#slide-out li:not(.logo) a span {
+  color: #dbeafe !important;
+}
