@@ -692,3 +692,114 @@ small {
     background-position-x: 30%;
   }
 }
+
+/* =========================================================
+Senior MLE Executive Theme & Component Styles
+========================================================= */
+body {
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+color: #1e293b;
+background-color: #f8fafc;
+}
+/* Deep Slate Sidebar & Section Headers */
+ul.side-nav.fixed,
+nav.hide-on-large.only {
+background-color: #0f172a !important;
+}
+ul.side-nav.fixed li.logo {
+background-color: #0f172a !important;
+border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+ul.side-nav.fixed li a {
+color: #cbd5e1 !important;
+font-weight: 500;
+}
+ul.side-nav.fixed li a:hover,
+ul.side-nav.fixed li.active a {
+background-color: rgba(255, 255, 255, 0.08) !important;
+color: #ffffff !important;
+}
+ul.side-nav.fixed li a i {
+color: #60a5fa !important;
+}
+h3.page-title.teal {
+background-color: #0f172a !important;
+color: #f8fafc !important;
+font-weight: 600 !important;
+letter-spacing: 0.03em;
+}
+.teal-text,
+.card .card-content .card-title.teal-text,
+.card .card-content .card-title a.teal-text {
+color: #1d4ed8 !important;
+}
+span.teal {
+background-color: #1d4ed8 !important;
+padding: 0 8px;
+border-radius: 4px;
+}
+.card {
+border-radius: 10px;
+border: 1px solid #e2e8f0;
+box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+}
+/* Impact Metrics Grid in #about */
+.metrics-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 14px;
+margin-top: 22px;
+}
+.metric-box {
+background: #f1f5f9;
+border: 1px solid #cbd5e1;
+border-radius: 8px;
+padding: 14px 16px;
+}
+.metric-value {
+font-size: 1.35rem;
+font-weight: 700;
+color: #0f172a;
+line-height: 1.2;
+}
+.metric-label {
+font-size: 0.9rem;
+color: #475569;
+margin-top: 4px;
+line-height: 1.35;
+}
+/* Clean Senior Skill Badges in #skills */
+.skill-pill-group {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+margin-top: 12px;
+}
+.skill-pill {
+background-color: #f1f5f9;
+color: #0f172a;
+border: 1px solid #cbd5e1;
+border-radius: 6px;
+padding: 6px 14px;
+font-size: 0.95rem;
+font-weight: 500;
+}
+/* Role Divider inside Multi-Role Experience Card */
+.prior-role-divider {
+border-top: 1px solid #e2e8f0;
+margin: 18px 0 14px 0;
+padding-top: 14px;
+}
+.role-header-row {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+flex-wrap: wrap;
+gap: 8px;
+margin-bottom: 6px;
+}
+.role-date-badge {
+font-size: 0.9rem;
+font-weight: 500;
+color: #64748b;
+}
