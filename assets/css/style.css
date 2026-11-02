@@ -862,3 +862,23 @@ ul.side-nav.fixed li a i {
 body {
   background-color: #eff6ff !important;
 }
+
+/* Sidebar navy blue, Nov 2026 */
+ul.side-nav.fixed {
+  background-color: #1e3a8a !important;
+}
+ul.side-nav.fixed li.logo {
+  background-color: #1e3a8a !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+ul.side-nav.fixed li a {
+  color: #dbeafe !important;
+}
+ul.side-nav.fixed li a:hover,
+ul.side-nav.fixed li.active a {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+ul.side-nav.fixed li a i {
+  color: #93c5fd !important;
+}
