@@ -996,3 +996,25 @@ ul.side-nav.fixed {
 body.menu-open ul.side-nav.fixed {
   transform: translateX(0);
 }
+
+/* Mobile top bar white text and light blue surfaces, Nov 2026 */
+#name {
+  color: #ffffff !important;
+}
+.name-title span.black-text {
+  color: #ffffff !important;
+}
+a.button-collapse,
+a.button-collapse i {
+  color: #ffffff !important;
+}
+ul#slide-out {
+  background-color: #dbeafe !important;
+}
+.card {
+  background-color: #dbeafe !important;
+}
+.readme {
+  background: #dbeafe !important;
+  border-color: #dbeafe !important;
+}
