@@ -1040,3 +1040,25 @@ ul#slide-out li a i {
 ul#slide-out li:not(.logo) a span {
   color: #dbeafe !important;
 }
+
+/* Phone menu lighter blue, Nov 2026 */
+ul#slide-out {
+  background-color: #dbeafe !important;
+}
+ul#slide-out li.logo {
+  background-color: #dbeafe !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.12) !important;
+}
+ul#slide-out li a {
+  color: #0f172a !important;
+}
+ul#slide-out li a:hover, ul#slide-out li.active a {
+  background-color: rgba(15, 23, 42, 0.10) !important;
+  color: #0f172a !important;
+}
+ul#slide-out li a i {
+  color: #1d4ed8 !important;
+}
+ul#slide-out li:not(.logo) a span {
+  color: #0f172a !important;
+}
