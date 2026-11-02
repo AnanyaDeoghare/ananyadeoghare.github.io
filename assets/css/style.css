@@ -1062,3 +1062,32 @@ ul#slide-out li a i {
 ul#slide-out li:not(.logo) a span {
   color: #0f172a !important;
 }
+
+/* Desktop sidebar and Menu button lighter blue, Nov 2026 */
+ul.side-nav.fixed {
+  background-color: #dbeafe !important;
+}
+ul.side-nav.fixed li.logo {
+  background-color: #dbeafe !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.12) !important;
+}
+ul.side-nav.fixed li a {
+  color: #0f172a !important;
+}
+ul.side-nav.fixed li a:hover, ul.side-nav.fixed li.active a {
+  background-color: rgba(15, 23, 42, 0.10) !important;
+  color: #0f172a !important;
+}
+ul.side-nav.fixed li a i {
+  color: #1d4ed8 !important;
+}
+.menu-toggle {
+  background: #dbeafe !important;
+  color: #0f172a !important;
+}
+.menu-toggle .menu-lines span {
+  background-color: #0f172a !important;
+}
+.menu-toggle .menu-label {
+  color: #0f172a !important;
+}
