@@ -1,4 +1,3 @@
-# Personal Portfolio
-This Personal Portfolio template was forked from https://github.com/varadbhogayata/varadbhogayata.github.io
+# Ananya Deoghare — Personal Portfolio
 
-To view a live example: https://ananyadeoghare.github.io
+Personal portfolio website: [https://ananyadeoghare.github.io](https://ananyadeoghare.github.io)
