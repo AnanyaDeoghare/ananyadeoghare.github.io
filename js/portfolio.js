@@ -436,21 +436,4 @@
       primaryLink.click();
     });
   });
-
-  const copyButton = document.querySelector("[data-copy-email]");
-  const copyStatus = document.getElementById("copy-status");
-  if (copyButton && copyStatus) {
-    copyButton.addEventListener("click", () => {
-      const email = `${copyButton.dataset.user}@${copyButton.dataset.domain}`;
-      if (!navigator.clipboard || !navigator.clipboard.writeText) {
-        copyStatus.textContent = `Email: ${copyButton.dataset.user} [at] ${copyButton.dataset.domain}`;
-        return;
-      }
-      navigator.clipboard.writeText(email).then(() => {
-        copyStatus.textContent = "Email address copied.";
-      }).catch(() => {
-        copyStatus.textContent = "Copy unavailable. Connect via LinkedIn instead.";
-      });
-    });
-  }
 })();
