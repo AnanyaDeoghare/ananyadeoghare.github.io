@@ -174,6 +174,7 @@
       context.clearRect(0, 0, width, height);
       const connectionDistance = 142;
       const connectionDistanceSquared = connectionDistance * connectionDistance;
+      const pointerConnectionDistance = 180;
       const maxConnectionsPerNode = 3;
       const connections = new Uint8Array(particles.length);
 
@@ -194,13 +195,13 @@
         if (pointer.x !== null && pointer.y !== null) {
           const px = particle.x + pointer.offsetX * particle.depth;
           const py = particle.y + pointer.offsetY * particle.depth;
-          const dx = px - pointer.x;
-          const dy = py - pointer.y;
+          const dx = pointer.x - px;
+          const dy = pointer.y - py;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 140 && distance > 1) {
-            const influence = (140 - distance) / 140;
-            particle.x += pointer.vx * influence * 0.14;
-            particle.y += pointer.vy * influence * 0.14;
+          if (distance < pointerConnectionDistance && distance > 1) {
+            const pull = (pointerConnectionDistance - distance) / pointerConnectionDistance;
+            particle.x += (dx / distance) * pull * 0.6 + pointer.vx * pull * 0.18;
+            particle.y += (dy / distance) * pull * 0.6 + pointer.vy * pull * 0.18;
             particle.x = Math.max(0, Math.min(width, particle.x));
             particle.y = Math.max(0, Math.min(height, particle.y));
           }
@@ -214,10 +215,28 @@
         context.fillStyle = `rgba(255,255,255,${particle.opacity.toFixed(2)})`;
         context.fill();
 
-        if (connections[index] >= maxConnectionsPerNode) return;
+        let nearPointer = false;
+        if (pointer.x !== null && pointer.y !== null) {
+          const mdx = drawX - pointer.x;
+          const mdy = drawY - pointer.y;
+          const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mDist < pointerConnectionDistance) {
+            nearPointer = true;
+            const mAlpha = (1 - mDist / pointerConnectionDistance) * 0.4;
+            context.beginPath();
+            context.moveTo(drawX, drawY);
+            context.lineTo(pointer.x, pointer.y);
+            context.strokeStyle = `rgba(255,255,255,${mAlpha.toFixed(3)})`;
+            context.lineWidth = 0.9;
+            context.stroke();
+          }
+        }
+
+        const nodeCap = nearPointer ? maxConnectionsPerNode + 2 : maxConnectionsPerNode;
+        if (connections[index] >= nodeCap) return;
 
         for (let next = index + 1; next < particles.length; next += 1) {
-          if (connections[next] >= maxConnectionsPerNode) continue;
+          if (connections[next] >= nodeCap) continue;
           const other = particles[next];
           const otherX = other.x + pointer.offsetX * other.depth;
           const otherY = other.y + pointer.offsetY * other.depth;
@@ -234,7 +253,7 @@
             context.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
             context.lineWidth = 0.85;
             context.stroke();
-            if (connections[index] >= maxConnectionsPerNode) break;
+            if (connections[index] >= nodeCap) break;
           }
         }
       });
