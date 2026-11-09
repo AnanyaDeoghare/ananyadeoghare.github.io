@@ -158,23 +158,24 @@
       canvas.height = Math.floor(height * ratio);
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-      const count = Math.min(125, Math.max(60, Math.floor((width * height) / 10000)));
+      const count = Math.min(78, Math.max(38, Math.floor((width * height) / 15000)));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.55,
-        vy: (Math.random() - 0.5) * 0.55,
-        radius: Math.random() * 1.8 + 1.3,
-        opacity: Math.random() * 0.45 + 0.4,
-        depth: Math.random() * 0.7 + 0.5
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        radius: Math.random() * 1.35 + 0.9,
+        opacity: Math.random() * 0.38 + 0.3,
+        depth: Math.random() * 0.65 + 0.45
       }));
     };
 
     const draw = () => {
       context.clearRect(0, 0, width, height);
-      const connectionDistance = 175;
+      const connectionDistance = 120;
       const connectionDistanceSquared = connectionDistance * connectionDistance;
-      const pointerConnectionDistance = 200;
+      const maxConnectionsPerNode = 2;
+      const connections = new Uint8Array(particles.length);
 
       pointer.offsetX += (pointer.targetOffsetX - pointer.offsetX) * 0.08;
       pointer.offsetY += (pointer.targetOffsetY - pointer.offsetY) * 0.08;
@@ -193,13 +194,13 @@
         if (pointer.x !== null && pointer.y !== null) {
           const px = particle.x + pointer.offsetX * particle.depth;
           const py = particle.y + pointer.offsetY * particle.depth;
-          const dx = pointer.x - px;
-          const dy = pointer.y - py;
+          const dx = px - pointer.x;
+          const dy = py - pointer.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < pointerConnectionDistance && distance > 1) {
-            const pull = (pointerConnectionDistance - distance) / pointerConnectionDistance;
-            particle.x += (dx / distance) * pull * 0.65 + pointer.vx * pull * 0.18;
-            particle.y += (dy / distance) * pull * 0.65 + pointer.vy * pull * 0.18;
+          if (distance < 140 && distance > 1) {
+            const influence = (140 - distance) / 140;
+            particle.x += pointer.vx * influence * 0.14;
+            particle.y += pointer.vy * influence * 0.14;
             particle.x = Math.max(0, Math.min(width, particle.x));
             particle.y = Math.max(0, Math.min(height, particle.y));
           }
@@ -213,22 +214,10 @@
         context.fillStyle = `rgba(255,255,255,${particle.opacity.toFixed(2)})`;
         context.fill();
 
-        if (pointer.x !== null && pointer.y !== null) {
-          const mdx = drawX - pointer.x;
-          const mdy = drawY - pointer.y;
-          const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
-          if (mDist < pointerConnectionDistance) {
-            const mAlpha = (1 - mDist / pointerConnectionDistance) * 0.45;
-            context.beginPath();
-            context.moveTo(drawX, drawY);
-            context.lineTo(pointer.x, pointer.y);
-            context.strokeStyle = `rgba(255,255,255,${mAlpha.toFixed(3)})`;
-            context.lineWidth = 1.1;
-            context.stroke();
-          }
-        }
+        if (connections[index] >= maxConnectionsPerNode) return;
 
         for (let next = index + 1; next < particles.length; next += 1) {
+          if (connections[next] >= maxConnectionsPerNode) continue;
           const other = particles[next];
           const otherX = other.x + pointer.offsetX * other.depth;
           const otherY = other.y + pointer.offsetY * other.depth;
@@ -236,13 +225,16 @@
           const offsetY = drawY - otherY;
           const distanceSquared = offsetX * offsetX + offsetY * offsetY;
           if (distanceSquared < connectionDistanceSquared) {
-            const alpha = (1 - distanceSquared / connectionDistanceSquared) * 0.32;
+            connections[index] += 1;
+            connections[next] += 1;
+            const alpha = (1 - distanceSquared / connectionDistanceSquared) * 0.22;
             context.beginPath();
             context.moveTo(drawX, drawY);
             context.lineTo(otherX, otherY);
             context.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
-            context.lineWidth = 1.15;
+            context.lineWidth = 0.85;
             context.stroke();
+            if (connections[index] >= maxConnectionsPerNode) break;
           }
         }
       });
