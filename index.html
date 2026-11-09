@@ -106,7 +106,7 @@
         <div class="about-grid">
           <div class="about-copy">
             <p>
-              I am a Senior Associate Algorithm Engineer at <a href="https://www.quinstreet.com/" target="_blank" rel="noopener noreferrer">QuinStreet</a>, where I own the end-to-end machine learning ranking architecture for the Personal Loans vertical, spanning CTR and conversion modeling, optimal allocation, constrained marketplace optimization, simulation, and online experimentation. Across 5+ years in AdTech and data engineering, I’ve focused on production ML systems where modeling decisions move revenue. Day to day, my work centers on matching consumer intent to the right offers in real time, testing ranking changes offline in a large-scale simulator before any production rollout, and guarding results with experimentation and monitoring. I also set modeling standards through design reviews, code reviews, and mentoring.
+              I am a Senior Associate Algorithm Engineer at <a href="https://www.quinstreet.com/" target="_blank" rel="noopener noreferrer">QuinStreet</a>, where I own the end-to-end machine learning ranking architecture for the Personal Loans vertical, spanning CTR and conversion modeling, optimal allocation, constrained marketplace optimization, and online experimentation. Across 5+ years in AdTech and data engineering, I’ve focused on production ML systems where modeling decisions move revenue. Day to day, my work centers on matching consumer intent to the right offers in real time and guarding results with experimentation and monitoring. I also set modeling standards through design reviews, code reviews, and mentoring.
             </p>
             <p>
               I hold a Master’s in Electrical and Computer Engineering from <a href="https://www.ucla.edu/" target="_blank" rel="noopener noreferrer">UCLA</a> (GPA 3.97/4.0), where my research on equitable remote health sensing was published at <a href="https://doi.org/10.1145/3528223.3530161" target="_blank" rel="noopener noreferrer">SIGGRAPH 2022</a> and I co-authored two chapters—<em>Introduction to Computational Imaging</em> and <em>Computational Toolkit</em>—for the <a href="https://mitpress.mit.edu/9780262048439/computational-imaging/" target="_blank" rel="noopener noreferrer">MIT Press <em>Computational Imaging</em></a> textbook. Earlier, I spent two years as a Software Engineer at Accenture in India, building data solutions for the healthcare and pharma sectors, and interned in ML at VidMob.
@@ -122,7 +122,7 @@
               <li>CTR &amp; Conversion Modeling</li>
               <li>Constrained Optimization</li>
               <li>Online Experimentation</li>
-              <li>Cython Simulation Systems</li>
+              <li>Marketplace Optimization</li>
               <li>Bayesian Optimization &amp; SHAP</li>
             </ul>
           </div>
@@ -143,12 +143,8 @@
             <p class="stat-label">margin revenue lift from the Hungarian assignment, online A/B vs. greedy baseline</p>
           </div>
           <div class="stat-card">
-            <span class="stat-value">50%</span>
-            <p class="stat-label">faster Cython simulator</p>
-          </div>
-          <div class="stat-card">
             <span class="stat-value">10%</span>
-            <p class="stat-label">avg. CTR improvement over legacy 14-week lookup baselines</p>
+            <p class="stat-label">avg. CTR improvement over legacy lookup baselines</p>
           </div>
         </div>
       </section>
@@ -175,7 +171,6 @@
               <li>Technical owner of the end-to-end ML ranking architecture for the Personal Loans vertical across 3M+ annual inquiries; scope expanded in 2026 to include the conversion model alongside CTR models, owning ranking performance, deployment strategy, experimentation, and expansion from subprime to higher-quality traffic (~$2M margin opportunity). Set the roadmap with Product, Business, and Engineering.</li>
               <li>Built the Personal Loans XGBoost vendor conversion (CVR) model and own the Personal Loans CTR model with weekly cron retraining; a persistent 90/10 holdout against the legacy lookup baseline shows about a 10% profit lift on a $1M+ margin segment.</li>
               <li>Lead a margin-preservation initiative (currently in pilot) combining CTR and CVR predictions to filter unprofitable leads before purchase, projecting an 8–12% reduction in wasted lead spend.</li>
-              <li>Own the Cython simulation framework, which stress-tests ranking strategies before release and monitors Auto Insurance production health daily; cut runtime by 50% and maintain parity with live production logic.</li>
               <li>Onboard and mentor 4+ algorithm engineers on ranking architecture, design reviews, and code reviews; authored the team’s code-quality and model-release standards, now followed team-wide.</li>
             </ul>
 
@@ -185,7 +180,7 @@
               <li>Built and shipped XGBoost CTR ranking models for Banking, Auto Insurance, and Personal Loans, averaging a 10% improvement over legacy 14-week lookup-table baselines in live serving.</li>
               <li>Built and productionized the Personal Loans funnel conversion prediction model using Bayesian optimization and cross-validation, complementing CTR models to optimize downstream conversion.</li>
               <li>Implemented the Hungarian algorithm for optimal constrained ranking assignment and validated it against the greedy baseline through staged online A/B tests (staged 90/10, then 50/50) on matched publisher traffic, lifting margin revenue 2.5–8% depending on traffic; now live in Auto Insurance and Banking.</li>
-              <li>Optimized the automated Cython simulation testing suite to 95% production fidelity, significantly expanding pre-release test coverage and computational efficiency.</li>
+              <li>Built and optimized an automated simulator that replays ranking changes against a replica of the live system, so the team can test changes safely before release. Cut its runtime by 50% while keeping its behavior matched to live production logic. It also runs daily to monitor Auto Insurance production health.</li>
               <li>Engineered high-impact user and lead features—using domain-specific aggregations, temporal windows, statistical summaries, and one-hot encoding—guided by SHAP attribution, permutation importance, and correlation analysis; built Amazon Redshift and Tableau evaluation workflows and partnered with Platform Engineering to validate and deploy models.</li>
             </ul>
           </article>
@@ -320,7 +315,7 @@
             <ul>
               <li><strong>Ranking &amp; Experimentation:</strong> Ranking &amp; Recommendations, CTR &amp; Conversion Modeling, A/B Testing, Online Experimentation, Constrained Optimization, Bayesian Optimization, Model Monitoring, Feature Engineering</li>
               <li><strong>Systems &amp; MLOps:</strong> Model Release Standards, Simulation Frameworks, Weekly Retraining Pipelines, Cron Scheduling, Model Monitoring</li>
-              <li><strong>Languages &amp; Core Tools:</strong> Python, SQL, Cython, C++, Java, Git, Linux/Cron</li>
+              <li><strong>Languages &amp; Core Tools:</strong> Python, SQL, C++, Java, Git, Linux/Cron</li>
               <li><strong>ML &amp; Scientific Libraries:</strong> XGBoost, PyTorch, TensorFlow, Keras, Scikit-learn, NumPy, Pandas, SciPy, SHAP, OpenCV</li>
               <li><strong>Data &amp; Cloud Tools:</strong> Amazon Redshift (AWS), Apache Hive, MySQL, Tableau</li>
               <li><strong>Research:</strong> Computer Vision, Multimodal Fusion, Signal Processing, Algorithmic Fairness</li>
@@ -392,27 +387,27 @@
               </span>
               <span class="number">FEATURED · 02 · CASE STUDY</span>
             </div>
-            <h3>Hungarian vs. Greedy Constrained Marketplace Optimization &amp; Cython Simulator</h3>
-            <p class="featured-summary">Replacing greedy offer slotting with global optimal constrained assignment (Hungarian algorithm) backed by a 95%-fidelity Cython simulation testbed.</p>
+            <h3>Hungarian vs. Greedy Constrained Marketplace Optimization</h3>
+            <p class="featured-summary">Replacing greedy offer slotting with global optimal constrained assignment (Hungarian algorithm) validated across staged online A/B rollouts.</p>
             <div class="case-study-grid">
               <div>
                 <h4>Problem &amp; approach</h4>
-                <p><strong>Problem:</strong> Greedy offer allocation sub-optimally matched consumer inquiries under advertiser eligibility and budget constraints. <strong>Approach:</strong> Formulated slotting as a global constrained assignment problem using the Hungarian algorithm and re-engineered the offline simulator in Cython (50% faster runtime, 95% production parity).</p>
+                <p><strong>Problem:</strong> Greedy offer allocation sub-optimally matched consumer inquiries under advertiser eligibility and budget constraints. <strong>Approach:</strong> Formulated slotting as a global constrained assignment problem using the Hungarian algorithm to maximize expected marketplace margin across eligible offers.</p>
               </div>
               <div>
                 <h4>Validation &amp; next steps</h4>
-                <p><strong>Validation:</strong> Stress-tested offline in the Cython simulator and validated online through staged A/B rollouts (staged 90/10, then 50/50) against the greedy baseline on matched publisher traffic. <strong>Next steps:</strong> Extending constrained assignment with joint CTR × CVR expected-margin scoring across additional verticals.</p>
+                <p><strong>Validation:</strong> Replayed against a replica of the live system before release and validated online through staged A/B rollouts (staged 90/10, then 50/50) against the greedy baseline on matched publisher traffic. <strong>Next steps:</strong> Extending constrained assignment with joint CTR × CVR expected-margin scoring across additional verticals.</p>
               </div>
               <aside class="case-study-outcomes">
                 <h4>Result</h4>
                 <ul>
                   <li>Delivered a 2.5–8% margin revenue lift in staged online A/B tests vs. greedy baseline.</li>
                   <li>Now live in production across Auto Insurance and Banking.</li>
-                  <li>Cut Cython simulator runtime by 50% with automated daily production health monitoring.</li>
+                  <li>Validated on matched publisher traffic across staged 90/10 and 50/50 rollouts.</li>
                 </ul>
               </aside>
             </div>
-            <div class="tag-list"><span class="tag">Hungarian algorithm</span><span class="tag">Constrained optimization</span><span class="tag">Cython</span><span class="tag">Staged 90/10 &amp; 50/50 A/B</span><span class="tag">Simulation</span></div>
+            <div class="tag-list"><span class="tag">Hungarian algorithm</span><span class="tag">Constrained optimization</span><span class="tag">Staged 90/10 &amp; 50/50 A/B</span><span class="tag">Marketplace ranking</span></div>
           </article>
 
           <article class="project-card featured-project">
