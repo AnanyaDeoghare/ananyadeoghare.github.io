@@ -158,14 +158,14 @@
       canvas.height = Math.floor(height * ratio);
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-      const count = Math.min(115, Math.max(55, Math.floor((width * height) / 10500)));
+      const count = Math.min(140, Math.max(70, Math.floor((width * height) / 8800)));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.45,
         vy: (Math.random() - 0.5) * 0.45,
-        radius: Math.random() * 1.35 + 0.9,
-        opacity: Math.random() * 0.38 + 0.3,
+        radius: Math.random() * 1.55 + 1.1,
+        opacity: Math.random() * 0.4 + 0.35,
         depth: Math.random() * 0.65 + 0.45
       }));
     };
@@ -251,7 +251,7 @@
             context.moveTo(drawX, drawY);
             context.lineTo(otherX, otherY);
             context.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
-            context.lineWidth = 0.85;
+            context.lineWidth = 0.95;
             context.stroke();
             if (connections[index] >= nodeCap) break;
           }
