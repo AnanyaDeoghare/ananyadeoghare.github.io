@@ -8,8 +8,8 @@
   --light-slate: #a8b2d1;
   --lightest-slate: #ccd6f6;
   --white: #e6f1ff;
-  --green: #64ffda;
-  --green-tint: rgb(100 255 218 / 10%);
+  --green: #ff2a85;
+  --green-tint: rgb(255 42 133 / 10%);
   --easing: cubic-bezier(0.645, 0.045, 0.355, 1);
   --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --sans: Inter, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
