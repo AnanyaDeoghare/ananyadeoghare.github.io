@@ -158,7 +158,7 @@
       canvas.height = Math.floor(height * ratio);
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-      const count = Math.min(78, Math.max(38, Math.floor((width * height) / 15000)));
+      const count = Math.min(115, Math.max(55, Math.floor((width * height) / 10500)));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -172,9 +172,9 @@
 
     const draw = () => {
       context.clearRect(0, 0, width, height);
-      const connectionDistance = 120;
+      const connectionDistance = 142;
       const connectionDistanceSquared = connectionDistance * connectionDistance;
-      const maxConnectionsPerNode = 2;
+      const maxConnectionsPerNode = 3;
       const connections = new Uint8Array(particles.length);
 
       pointer.offsetX += (pointer.targetOffsetX - pointer.offsetX) * 0.08;
@@ -227,7 +227,7 @@
           if (distanceSquared < connectionDistanceSquared) {
             connections[index] += 1;
             connections[next] += 1;
-            const alpha = (1 - distanceSquared / connectionDistanceSquared) * 0.22;
+            const alpha = (1 - distanceSquared / connectionDistanceSquared) * 0.25;
             context.beginPath();
             context.moveTo(drawX, drawY);
             context.lineTo(otherX, otherY);
