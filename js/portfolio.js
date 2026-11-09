@@ -148,7 +148,7 @@
     let particles = [];
     let frame = 0;
     let visible = true;
-    const pointer = { x: null, y: null };
+    const pointer = { x: null, y: null, vx: 0, vy: 0, offsetX: 0, offsetY: 0, targetOffsetX: 0, targetOffsetY: 0 };
 
     const resizeCanvas = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -158,21 +158,28 @@
       canvas.height = Math.floor(height * ratio);
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-      const count = Math.min(115, Math.max(50, Math.floor((width * height) / 11000)));
+      const count = Math.min(125, Math.max(60, Math.floor((width * height) / 10000)));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.42,
-        vy: (Math.random() - 0.5) * 0.42,
-        radius: Math.random() * 1.3 + 0.6,
-        opacity: Math.random() * 0.4 + 0.25
+        vx: (Math.random() - 0.5) * 0.55,
+        vy: (Math.random() - 0.5) * 0.55,
+        radius: Math.random() * 1.8 + 1.3,
+        opacity: Math.random() * 0.45 + 0.4,
+        depth: Math.random() * 0.7 + 0.5
       }));
     };
 
     const draw = () => {
       context.clearRect(0, 0, width, height);
-      const connectionDistance = 135;
+      const connectionDistance = 175;
       const connectionDistanceSquared = connectionDistance * connectionDistance;
+      const pointerConnectionDistance = 200;
+
+      pointer.offsetX += (pointer.targetOffsetX - pointer.offsetX) * 0.08;
+      pointer.offsetY += (pointer.targetOffsetY - pointer.offsetY) * 0.08;
+      pointer.vx *= 0.9;
+      pointer.vy *= 0.9;
 
       particles.forEach((particle, index) => {
         if (!reduceMotion.matches) {
@@ -181,36 +188,60 @@
 
           if (particle.x < 0 || particle.x > width) particle.vx *= -1;
           if (particle.y < 0 || particle.y > height) particle.vy *= -1;
+        }
 
-          if (pointer.x !== null && pointer.y !== null) {
-            const dx = particle.x - pointer.x;
-            const dy = particle.y - pointer.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < 145 && distance > 1) {
-              const force = (145 - distance) / 145;
-              particle.x += (dx / distance) * force * 0.8;
-              particle.y += (dy / distance) * force * 0.8;
-            }
+        if (pointer.x !== null && pointer.y !== null) {
+          const px = particle.x + pointer.offsetX * particle.depth;
+          const py = particle.y + pointer.offsetY * particle.depth;
+          const dx = pointer.x - px;
+          const dy = pointer.y - py;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < pointerConnectionDistance && distance > 1) {
+            const pull = (pointerConnectionDistance - distance) / pointerConnectionDistance;
+            particle.x += (dx / distance) * pull * 0.65 + pointer.vx * pull * 0.18;
+            particle.y += (dy / distance) * pull * 0.65 + pointer.vy * pull * 0.18;
+            particle.x = Math.max(0, Math.min(width, particle.x));
+            particle.y = Math.max(0, Math.min(height, particle.y));
           }
         }
 
+        const drawX = particle.x + pointer.offsetX * particle.depth;
+        const drawY = particle.y + pointer.offsetY * particle.depth;
+
         context.beginPath();
-        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        context.arc(drawX, drawY, particle.radius, 0, Math.PI * 2);
         context.fillStyle = `rgba(255,255,255,${particle.opacity.toFixed(2)})`;
         context.fill();
 
+        if (pointer.x !== null && pointer.y !== null) {
+          const mdx = drawX - pointer.x;
+          const mdy = drawY - pointer.y;
+          const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mDist < pointerConnectionDistance) {
+            const mAlpha = (1 - mDist / pointerConnectionDistance) * 0.45;
+            context.beginPath();
+            context.moveTo(drawX, drawY);
+            context.lineTo(pointer.x, pointer.y);
+            context.strokeStyle = `rgba(255,255,255,${mAlpha.toFixed(3)})`;
+            context.lineWidth = 1.1;
+            context.stroke();
+          }
+        }
+
         for (let next = index + 1; next < particles.length; next += 1) {
           const other = particles[next];
-          const offsetX = particle.x - other.x;
-          const offsetY = particle.y - other.y;
+          const otherX = other.x + pointer.offsetX * other.depth;
+          const otherY = other.y + pointer.offsetY * other.depth;
+          const offsetX = drawX - otherX;
+          const offsetY = drawY - otherY;
           const distanceSquared = offsetX * offsetX + offsetY * offsetY;
           if (distanceSquared < connectionDistanceSquared) {
-            const alpha = (1 - distanceSquared / connectionDistanceSquared) * 0.2;
+            const alpha = (1 - distanceSquared / connectionDistanceSquared) * 0.32;
             context.beginPath();
-            context.moveTo(particle.x, particle.y);
-            context.lineTo(other.x, other.y);
+            context.moveTo(drawX, drawY);
+            context.lineTo(otherX, otherY);
             context.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
-            context.lineWidth = 0.75;
+            context.lineWidth = 1.15;
             context.stroke();
           }
         }
@@ -223,13 +254,28 @@
 
     const updatePointer = (event) => {
       const bounds = hero.getBoundingClientRect();
-      pointer.x = event.clientX - bounds.left;
-      pointer.y = event.clientY - bounds.top;
+      const nextX = event.clientX - bounds.left;
+      const nextY = event.clientY - bounds.top;
+      if (pointer.x !== null && pointer.y !== null) {
+        pointer.vx = nextX - pointer.x;
+        pointer.vy = nextY - pointer.y;
+      }
+      pointer.x = nextX;
+      pointer.y = nextY;
+      pointer.targetOffsetX = ((nextX / Math.max(width, 1)) - 0.5) * 42;
+      pointer.targetOffsetY = ((nextY / Math.max(height, 1)) - 0.5) * 42;
+      if (reduceMotion.matches) {
+        draw();
+      }
     };
 
     const clearPointer = () => {
       pointer.x = null;
       pointer.y = null;
+      pointer.vx = 0;
+      pointer.vy = 0;
+      pointer.targetOffsetX = 0;
+      pointer.targetOffsetY = 0;
     };
 
     const observeVisibility = (entries) => {
